@@ -118,13 +118,16 @@
     <p>StoreHealth is developed and operated by <strong>Apex Forge Technologies</strong>, a sole proprietor developer based in India, referred to here as "we," "us," or "the developer."</p>
 
     <h2>1. What StoreHealth does</h2>
-    <p>StoreHealth runs a daily automated audit of your store and reports operational issues it finds: products that are out of stock but still published, products missing images, variants missing shipping weight, orders left unfulfilled past a threshold you can configure, and products with pricing errors (compare-at price lower than price).</p>
+    <p>StoreHealth runs an automated audit of your store and reports operational issues it finds: products that are out of stock but still published, published products missing images, variants that require shipping but have no weight, orders left unfulfilled past a threshold (7 days by default), and published products with a pricing error (compare-at price not above the price).</p>
+    <div class="highlight-box">
+      <p><strong>Pre-release.</strong> StoreHealth is in development and not yet on the Shopify App Store. Automatic daily scanning and stored audit history are planned but not yet built; today an audit runs when you open the dashboard. See our <a href="privacy.html">Privacy Policy</a> for current versus planned data handling.</p>
+    </div>
     <div class="highlight-box">
       <p><strong>StoreHealth is read-only.</strong> It does not create, modify, or delete any product, inventory, order, or customer record in your store. It only reads data to compute and display audit results.</p>
     </div>
 
     <h2>2. Data we access</h2>
-    <p>We access product, variant, inventory, and location data, and exactly five order fields: <code>id</code>, <code>name</code>, <code>createdAt</code>, <code>displayFulfillmentStatus</code>, and <code>cancelledAt</code>. We do not request, read, or store any customer personal data — no names, emails, phone numbers, or addresses. Full detail is in our <a href="privacy.html">Privacy Policy</a>.</p>
+    <p>We access product, variant, inventory, and location data, and exactly five order fields: <code>id</code>, <code>name</code>, <code>createdAt</code>, <code>displayFulfillmentStatus</code>, and <code>cancelledAt</code> &mdash; and only for orders that are open and were created in the last 60 days. We do not request, read, or store any customer personal data &mdash; no names, emails, phone numbers, or addresses. No query we send contains a <code>customer</code> field. Full detail is in our <a href="privacy.html">Privacy Policy</a>.</p>
 
     <h2>3. Controller and processor roles</h2>
     <p>For the purposes of applicable data protection law, <strong>you (the merchant) are the data controller</strong> of your store's data, including any personal data associated with your orders and customers. <strong>We act as a data processor</strong>, processing the limited data described above solely to provide the StoreHealth service to you, and solely on your instructions as expressed through your use of the app.</p>
@@ -133,22 +136,23 @@
     <h2>4. Sub-processors</h2>
     <p>We use the following sub-processors to operate StoreHealth:</p>
     <ul>
-      <li><strong>Neon</strong> (managed PostgreSQL database)</li>
-      <li><strong>Fly.io</strong> (application hosting)</li>
+      <li><strong>Shopify</strong> &mdash; the platform the app runs on and reads data from.</li>
+      <li><strong>Neon</strong> (managed PostgreSQL) &mdash; the database for stored audit results described in our Privacy Policy, Section 5. Planned; not yet active.</li>
     </ul>
-    <p>We remain responsible for these sub-processors' handling of your data in connection with StoreHealth. If we add or change a sub-processor in a way that materially affects how your data is handled, we will update our Privacy Policy and note the change date.</p>
+    <p>StoreHealth is in pre-release development and is not yet deployed to production. The application hosting provider will be named here before the app is made available to merchants, and this agreement and our Privacy Policy updated at that time. We remain responsible for any sub-processor's handling of your data in connection with StoreHealth.</p>
 
     <h2>5. Security measures</h2>
     <ul>
-      <li>Data is encrypted in transit using TLS.</li>
-      <li>Data is encrypted at rest in our managed database provider.</li>
-      <li>Access to production data is limited to the developer; StoreHealth is currently operated by a single individual, not a team, and no third-party staff have data access.</li>
-      <li>We do not maintain a separate marketing or analytics copy of your data outside the systems described here.</li>
+      <li>Data in transit between Shopify, StoreHealth, and its database is encrypted using TLS.</li>
+      <li>The planned production database, Neon, encrypts data at rest. StoreHealth is not yet deployed to production; our Privacy Policy (Sections 4&ndash;5) describes what is stored today.</li>
+      <li>Every webhook we receive is verified by its HMAC signature before any action is taken; unverified requests are rejected.</li>
+      <li>Access to production systems is limited to the developer. StoreHealth is operated by a single individual, not a team; no third-party staff have data access.</li>
+      <li>We do not keep a separate marketing or analytics copy of your data outside the systems described here.</li>
     </ul>
 
     <h2>6. Retention and deletion</h2>
-    <p>We retain the results of your last 30 audit runs. For orders flagged by the audit, we retain only the order ID and name — never other order or customer fields. Older audit history beyond the most recent 30 runs is automatically pruned.</p>
-    <p><strong>On uninstall</strong>, Shopify notifies us via the <code>app/uninstalled</code> webhook, and we automatically and permanently delete all data associated with your shop. This happens without further action from you.</p>
+    <p>StoreHealth does not currently store audit results. A planned update will retain the results of your <strong>last 30 audit runs</strong>, and for flagged orders only the order ID and name &mdash; never other order fields, never customer data. Older runs beyond the most recent 30 will be pruned automatically. Our Privacy Policy (Sections 4&ndash;5) describes current versus planned storage.</p>
+    <p><strong>On uninstall</strong>, Shopify sends the <code>app/uninstalled</code> webhook and we permanently delete every record we hold for your shop. About 48 hours later Shopify also sends a <code>shop/redact</code> webhook, on which we run the same deletion again. Both are automatic and require no action from you.</p>
     <p>You can request earlier deletion, or ask what data we hold about your shop, at any time by contacting <strong><a href="mailto:apexforgetechnologies@gmail.com">apexforgetechnologies@gmail.com</a></strong>.</p>
 
     <h2>7. No sale, no profiling, no automated decisions</h2>

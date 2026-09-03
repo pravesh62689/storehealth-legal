@@ -117,8 +117,12 @@
     <p>This Privacy Policy explains what data the StoreHealth app ("StoreHealth," "the app," "we," "us") accesses when installed on a Shopify store, why it accesses that data, how it is stored, and how it is deleted. StoreHealth is developed and operated by <strong>Apex Forge Technologies</strong>, a sole proprietorship based in India.</p>
     <p>If you have questions about this policy or want to make a data request, contact: <strong><a href="mailto:apexforgetechnologies@gmail.com">apexforgetechnologies@gmail.com</a></strong></p>
 
+    <div class="highlight-box">
+      <p><strong>Development status.</strong> StoreHealth is in pre-release development. It is not yet available on the Shopify App Store or deployed to a production server. Some things described below &mdash; automatic daily scanning, storage of recent audit results, and the production database &mdash; are planned but not yet active, and are marked as such. Today, an audit runs when you open the dashboard. This policy will be updated before any of that changes.</p>
+    </div>
+
     <h2>1. What StoreHealth reads</h2>
-    <p>StoreHealth is a <strong>read-only</strong> app. It never creates, edits, or deletes data in your store. To run its daily store health audit, it reads:</p>
+    <p>StoreHealth is a <strong>read-only</strong> app. It never creates, edits, or deletes data in your store. To run its store health audit, it reads:</p>
     <ul>
       <li><strong>Product data:</strong> title, status (active/draft/archived), publication state, images, price, compare-at price</li>
       <li><strong>Variant data:</strong> inventory tracking settings, weight, shipping requirements</li>
@@ -134,7 +138,8 @@
         </ul>
       </li>
     </ul>
-    <p>StoreHealth uses this data to detect: products that are out of stock but still published to your storefront, products missing images, variants missing shipping weight where shipping is required, orders that have remained unfulfilled past a merchant-configurable threshold (default 7 days), and products where the compare-at price is lower than the price (a pricing error).</p>
+    <p>StoreHealth only requests orders that are <strong>open</strong> (not archived, closed, or cancelled) and were <strong>created within the last 60 days</strong>. Older orders are never read.</p>
+    <p>StoreHealth uses this data to detect: products that are out of stock but still published to your storefront, published products missing images, variants that require shipping but have no weight set, orders that have remained unfulfilled past a threshold (7 days by default), and published products where the compare-at price is not above the price (a pricing error).</p>
 
     <h2>2. What StoreHealth does NOT read</h2>
     <div class="highlight-box">
@@ -150,35 +155,45 @@
     <p>No GraphQL query issued by StoreHealth contains a <code>customer</code> field or any customer-identifying data. This is a deliberate design choice, not an incidental limitation: StoreHealth's audit logic operates entirely on product, inventory, and order-status data and has no need for customer personal data to function.</p>
 
     <h2>3. Why we process this data</h2>
-    <p>The sole purpose of the data StoreHealth reads is to power its daily automated store health audit and present the results on your StoreHealth dashboard. We do not use this data for any other purpose. We do not use it for marketing, advertising, profiling, or any form of automated decision-making that affects you or your customers. We do not sell this data, and we do not share it with third parties except the infrastructure sub-processors described in Section 5.</p>
+    <p>The sole purpose of the data StoreHealth reads is to power its automated store health audit and present the results on your StoreHealth dashboard. We do not use this data for any other purpose. We do not use it for marketing, advertising, profiling, or any form of automated decision-making that affects you or your customers. We do not sell this data, and we do not share it with third parties except the infrastructure sub-processors described in Section 7.</p>
 
-    <h2>4. Where data is stored and how it is protected</h2>
+    <h2>4. What StoreHealth stores today</h2>
+    <p>To connect to your store, StoreHealth keeps one record per install: your store's domain, the offline API access token Shopify issues, and the list of permission scopes you granted. This is the standard session record every Shopify app keeps, and it is what lets the app read your store's data. StoreHealth uses offline access tokens only, so this record holds no staff name or email.</p>
+    <p><strong>StoreHealth does not currently store the results of your audits.</strong> The audit runs against live data each time you open the dashboard, and the results are shown to you without being written to a database. Product, inventory, and order data read during an audit is held in memory only for the moment it takes to compute the results, then discarded.</p>
+    <p>All data in transit between Shopify, StoreHealth, and its database is encrypted with TLS.</p>
+
+    <h2>5. Planned: storage of recent audit results</h2>
+    <p>A future update will save recent audit results so the dashboard can show what changed since your last scan. <strong>This is not yet built.</strong> When it ships:</p>
     <ul>
-      <li><strong>Database:</strong> Neon (managed PostgreSQL), encrypted at rest</li>
-      <li><strong>Transit:</strong> All data in transit between Shopify, StoreHealth's servers, and its database is encrypted using TLS</li>
-      <li><strong>What is actually stored:</strong> For flagged orders specifically, StoreHealth stores only the order <code>id</code> and <code>name</code> — never the other three fields it reads for computation, and never any customer data. Product and inventory data used for the audit is processed and reflected in dashboard results but is not retained beyond what is needed to compute and display the current and recent audit state.</li>
+      <li>StoreHealth will keep only the <strong>last 30 audit runs per store</strong>; older runs are pruned automatically.</li>
+      <li>For a flagged order it will store only the order <code>id</code> and <code>name</code> — never <code>createdAt</code>, <code>displayFulfillmentStatus</code>, or <code>cancelledAt</code>, and never any customer data.</li>
+      <li>The production database will be <strong>Neon</strong> (managed PostgreSQL), encrypted at rest.</li>
     </ul>
+    <p>This policy and its "Last updated" date will change before this storage is enabled.</p>
 
-    <h2>5. Retention</h2>
-    <p>StoreHealth retains the results of the <strong>last 30 audit runs per store</strong>. Older audit run data is pruned automatically. We do not keep an indefinite history of your store's data.</p>
-
-    <h2>6. Deletion</h2>
-    <p>When you uninstall StoreHealth, Shopify sends an <code>app/uninstalled</code> webhook to our servers. On receipt of that webhook, <strong>all data associated with your shop is hard-deleted</strong> from our database. This is an automated process; no manual request is required to have your shop's data removed upon uninstall.</p>
-    <p>You may also request deletion of your data at any time before uninstalling by contacting us at the email address above.</p>
+    <h2>6. Deletion and compliance webhooks</h2>
+    <p>StoreHealth implements Shopify's three mandatory privacy webhooks. Every webhook request &mdash; these and all others &mdash; is verified by its HMAC signature; a request that fails verification is rejected with <code>401 Unauthorized</code> and no action is taken.</p>
+    <ul>
+      <li><strong><code>app/uninstalled</code></strong> &mdash; sent when you remove the app. StoreHealth hard-deletes every record it holds for your shop. Today that is the session record described in Section 4.</li>
+      <li><strong><code>shop/redact</code></strong> &mdash; sent by Shopify roughly 48 hours after uninstall. StoreHealth runs the same deletion again, so your data is removed even if the first webhook was missed.</li>
+      <li><strong><code>customers/data_request</code></strong> &mdash; StoreHealth stores no customer personal data, so it acknowledges the request with nothing to return.</li>
+      <li><strong><code>customers/redact</code></strong> &mdash; there is no customer data to erase; StoreHealth acknowledges the request.</li>
+    </ul>
+    <p>Deletion on uninstall is automatic &mdash; no request is needed. You may also ask us to delete your data at any time before uninstalling, by contacting the email above.</p>
 
     <h2>7. Sub-processors</h2>
-    <p>StoreHealth relies on the following infrastructure providers to operate:</p>
+    <p>StoreHealth is operated by Apex Forge Technologies. It relies on:</p>
     <ul>
-      <li><strong>Neon</strong> — managed PostgreSQL database hosting</li>
-      <li><strong>Fly.io</strong> — application hosting</li>
+      <li><strong>Shopify</strong> &mdash; the platform StoreHealth runs on and reads data from.</li>
+      <li><strong>Neon</strong> (managed PostgreSQL) &mdash; the database for the audit-result storage described in Section 5. Planned; not yet active.</li>
     </ul>
-    <p>These providers process data solely as infrastructure on our behalf, under their own security and data protection commitments. We do not use any sub-processor for marketing, analytics resale, or any purpose unrelated to operating StoreHealth.</p>
+    <p>StoreHealth is in pre-release development and is not yet deployed to a production server. The application hosting provider will be named here before the app is made available to merchants, and this policy updated at that time. No sub-processor is used for marketing, analytics resale, or any purpose beyond operating StoreHealth.</p>
 
     <h2>8. No sale, no sharing, no profiling</h2>
     <p>We do not sell any data accessed by StoreHealth. We do not share it with third parties for their own purposes. We do not build customer profiles. We do not use automated decision-making that produces legal or similarly significant effects on any person. All of StoreHealth's checks are deterministic, rule-based comparisons (e.g., "is quantity zero and status published") — there is no machine learning model, scoring, or profiling involved.</p>
 
     <h2>9. Your rights</h2>
-    <p>Because StoreHealth does not process customer personal data at all, there is no customer data for a shopper to request access to, correct, or delete from StoreHealth specifically. If you are a merchant using StoreHealth and want to review, export, or delete the limited order-identifier data we retain (order ID and name for flagged orders, per Section 4), contact us at the email above and we will act on your request within a reasonable time.</p>
+    <p>Because StoreHealth does not process customer personal data at all, there is no customer data for a shopper to request access to, correct, or delete from StoreHealth specifically. If you are a merchant using StoreHealth and want to review or delete what we hold about your store, contact us at the email above and we will act on your request within a reasonable time. Today the only stored record is your store's session (see Section 4).</p>
 
     <h2>10. Changes to this policy</h2>
     <p>If we materially change what data StoreHealth accesses or how it is used, we will update this policy and change the "Last updated" date above. Continued use of StoreHealth after a change constitutes acceptance of the updated policy.</p>
