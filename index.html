@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legal — StoreHealth</title>
+  <meta name="description" content="Legal documents for the StoreHealth Shopify app — Privacy Policy and Merchant Terms.">
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #181a24;
+      --border: #262938;
+      --text: #e4e6ed;
+      --text-muted: #9196aa;
+      --accent: #6c5ce7;
+      --accent-light: #a29bfe;
+      --heading: #ffffff;
+      --radius: 12px;
+      --max-width: 780px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      padding: 0 1.25rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      max-width: var(--max-width);
+      margin: 3rem auto 2rem;
+      width: 100%;
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 520px;
+    }
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto 4rem;
+      width: 100%;
+      flex: 1;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(108, 92, 231, 0.12);
+    }
+    .card h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--heading);
+      margin-bottom: 0.6rem;
+    }
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 1.25rem;
+    }
+    .card .link-text {
+      color: var(--accent-light);
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .card .link-text::after {
+      content: '→';
+      transition: transform 0.2s;
+    }
+    .card:hover .link-text::after {
+      transform: translateX(4px);
+    }
+    .info-bar {
+      margin-top: 2.5rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .info-bar strong {
+      color: var(--heading);
+    }
+    .info-bar a {
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+    .info-bar a:hover { text-decoration: underline; }
+    footer {
+      max-width: var(--max-width);
+      margin: 0 auto 3rem;
+      width: 100%;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>StoreHealth — Legal</h1>
+    <p>Legal documents for the StoreHealth Shopify app, developed by Apex Forge Technologies.</p>
+  </header>
+
+  <main>
+    <div class="card-grid">
+      <a href="privacy.html" class="card" id="privacy-link">
+        <h2>Privacy Policy</h2>
+        <p>What data StoreHealth reads, why it reads it, how it's stored, and how it's deleted when you uninstall.</p>
+        <span class="link-text">Read Privacy Policy</span>
+      </a>
+
+      <a href="terms.html" class="card" id="terms-link">
+        <h2>Merchant Terms &amp; Data Protection</h2>
+        <p>Your agreement with StoreHealth covering data access, controller/processor roles, security, retention, and breach notification.</p>
+        <span class="link-text">Read Merchant Terms</span>
+      </a>
+    </div>
+
+    <div class="info-bar">
+      <strong>Questions?</strong> Reach out at <a href="mailto:support@apexforgetech.com">support@apexforgetech.com</a>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 Apex Forge Technologies. All rights reserved.
+  </footer>
+</body>
+</html>

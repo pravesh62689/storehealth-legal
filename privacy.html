@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — StoreHealth</title>
+  <meta name="description" content="StoreHealth Privacy Policy — What data we access, how we store it, and how we delete it.">
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #181a24;
+      --border: #262938;
+      --text: #e4e6ed;
+      --text-muted: #9196aa;
+      --accent: #6c5ce7;
+      --accent-light: #a29bfe;
+      --heading: #ffffff;
+      --radius: 12px;
+      --max-width: 780px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      padding: 0 1.25rem;
+    }
+    header {
+      max-width: var(--max-width);
+      margin: 3rem auto 2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    header nav {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    header nav a {
+      color: var(--accent-light);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    header nav a:hover { color: #fff; }
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto 4rem;
+    }
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--heading);
+      margin: 2.25rem 0 0.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+    }
+    h2:first-of-type { border-top: none; padding-top: 0; }
+    p { margin-bottom: 0.9rem; }
+    ul, ol {
+      padding-left: 1.5rem;
+      margin-bottom: 0.9rem;
+    }
+    li { margin-bottom: 0.35rem; }
+    code {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.15em 0.4em;
+      font-size: 0.88em;
+      color: var(--accent-light);
+    }
+    strong { color: var(--heading); font-weight: 600; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .highlight-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 0 1.25rem;
+    }
+    footer {
+      max-width: var(--max-width);
+      margin: 0 auto 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>StoreHealth Privacy Policy</h1>
+    <p><strong>Last updated:</strong> September 3, 2026</p>
+    <nav>
+      <a href="index.html">← Home</a>
+      <a href="terms.html">Merchant Terms</a>
+    </nav>
+  </header>
+
+  <main>
+    <p>This Privacy Policy explains what data the StoreHealth app ("StoreHealth," "the app," "we," "us") accesses when installed on a Shopify store, why it accesses that data, how it is stored, and how it is deleted. StoreHealth is developed and operated by <strong>Apex Forge Technologies</strong>, a sole proprietorship based in India.</p>
+    <p>If you have questions about this policy or want to make a data request, contact: <strong><a href="mailto:support@apexforgetech.com">support@apexforgetech.com</a></strong></p>
+
+    <h2>1. What StoreHealth reads</h2>
+    <p>StoreHealth is a <strong>read-only</strong> app. It never creates, edits, or deletes data in your store. To run its daily store health audit, it reads:</p>
+    <ul>
+      <li><strong>Product data:</strong> title, status (active/draft/archived), publication state, images, price, compare-at price</li>
+      <li><strong>Variant data:</strong> inventory tracking settings, weight, shipping requirements</li>
+      <li><strong>Inventory data:</strong> quantity on hand and availability, by location</li>
+      <li><strong>Location data:</strong> store locations associated with inventory</li>
+      <li><strong>Order data — exactly five fields only:</strong>
+        <ul>
+          <li><code>id</code></li>
+          <li><code>name</code></li>
+          <li><code>createdAt</code></li>
+          <li><code>displayFulfillmentStatus</code></li>
+          <li><code>cancelledAt</code></li>
+        </ul>
+      </li>
+    </ul>
+    <p>StoreHealth uses this data to detect: products that are out of stock but still published to your storefront, products missing images, variants missing shipping weight where shipping is required, orders that have remained unfulfilled past a merchant-configurable threshold (default 7 days), and products where the compare-at price is lower than the price (a pricing error).</p>
+
+    <h2>2. What StoreHealth does NOT read</h2>
+    <div class="highlight-box">
+      <p>StoreHealth's order queries request <strong>no customer object whatsoever</strong>. Specifically, StoreHealth does <strong>not</strong> access, process, transmit, or store:</p>
+      <ul>
+        <li>Customer names</li>
+        <li>Customer email addresses</li>
+        <li>Customer phone numbers</li>
+        <li>Customer shipping or billing addresses</li>
+        <li>Any other customer personal data</li>
+      </ul>
+    </div>
+    <p>No GraphQL query issued by StoreHealth contains a <code>customer</code> field or any customer-identifying data. This is a deliberate design choice, not an incidental limitation: StoreHealth's audit logic operates entirely on product, inventory, and order-status data and has no need for customer personal data to function.</p>
+
+    <h2>3. Why we process this data</h2>
+    <p>The sole purpose of the data StoreHealth reads is to power its daily automated store health audit and present the results on your StoreHealth dashboard. We do not use this data for any other purpose. We do not use it for marketing, advertising, profiling, or any form of automated decision-making that affects you or your customers. We do not sell this data, and we do not share it with third parties except the infrastructure sub-processors described in Section 5.</p>
+
+    <h2>4. Where data is stored and how it is protected</h2>
+    <ul>
+      <li><strong>Database:</strong> Neon (managed PostgreSQL), encrypted at rest</li>
+      <li><strong>Transit:</strong> All data in transit between Shopify, StoreHealth's servers, and its database is encrypted using TLS</li>
+      <li><strong>What is actually stored:</strong> For flagged orders specifically, StoreHealth stores only the order <code>id</code> and <code>name</code> — never the other three fields it reads for computation, and never any customer data. Product and inventory data used for the audit is processed and reflected in dashboard results but is not retained beyond what is needed to compute and display the current and recent audit state.</li>
+    </ul>
+
+    <h2>5. Retention</h2>
+    <p>StoreHealth retains the results of the <strong>last 30 audit runs per store</strong>. Older audit run data is pruned automatically. We do not keep an indefinite history of your store's data.</p>
+
+    <h2>6. Deletion</h2>
+    <p>When you uninstall StoreHealth, Shopify sends an <code>app/uninstalled</code> webhook to our servers. On receipt of that webhook, <strong>all data associated with your shop is hard-deleted</strong> from our database. This is an automated process; no manual request is required to have your shop's data removed upon uninstall.</p>
+    <p>You may also request deletion of your data at any time before uninstalling by contacting us at the email address above.</p>
+
+    <h2>7. Sub-processors</h2>
+    <p>StoreHealth relies on the following infrastructure providers to operate:</p>
+    <ul>
+      <li><strong>Neon</strong> — managed PostgreSQL database hosting</li>
+      <li><strong>Fly.io</strong> — application hosting</li>
+    </ul>
+    <p>These providers process data solely as infrastructure on our behalf, under their own security and data protection commitments. We do not use any sub-processor for marketing, analytics resale, or any purpose unrelated to operating StoreHealth.</p>
+
+    <h2>8. No sale, no sharing, no profiling</h2>
+    <p>We do not sell any data accessed by StoreHealth. We do not share it with third parties for their own purposes. We do not build customer profiles. We do not use automated decision-making that produces legal or similarly significant effects on any person. All of StoreHealth's checks are deterministic, rule-based comparisons (e.g., "is quantity zero and status published") — there is no machine learning model, scoring, or profiling involved.</p>
+
+    <h2>9. Your rights</h2>
+    <p>Because StoreHealth does not process customer personal data at all, there is no customer data for a shopper to request access to, correct, or delete from StoreHealth specifically. If you are a merchant using StoreHealth and want to review, export, or delete the limited order-identifier data we retain (order ID and name for flagged orders, per Section 4), contact us at the email above and we will act on your request within a reasonable time.</p>
+
+    <h2>10. Changes to this policy</h2>
+    <p>If we materially change what data StoreHealth accesses or how it is used, we will update this policy and change the "Last updated" date above. Continued use of StoreHealth after a change constitutes acceptance of the updated policy.</p>
+
+    <h2>11. Contact</h2>
+    <p><strong>Apex Forge Technologies</strong><br>
+    Email: <a href="mailto:support@apexforgetech.com">support@apexforgetech.com</a></p>
+  </main>
+
+  <footer>
+    &copy; 2026 Apex Forge Technologies. All rights reserved.
+  </footer>
+</body>
+</html>
